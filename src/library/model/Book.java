@@ -1,24 +1,21 @@
 package library.model;
 
-public class Book {
-    private String title;
+public class Book extends Publication {
     private String author;
-    private int releaseDate;
-    private int pages;
-    private String publisher;
     private String isbn;
+    private int pages;
 
     public Book(String title, String author, int releasedate, int pages, String publisher, String isbn) {
         this(title, author, releasedate, pages, publisher);
         this.isbn = isbn;
     }
 
-    public Book(String title, String author, int releaseDate, int pages, String publisher) {
-        this.title = title;
-        this.author = author;
-        this.releaseDate = releaseDate;
+    private Book(String title, String author, int releaseDate, int pages, String publisher) {
+        setTitle(title);
+        setPublisher(publisher);
+        setYear(releaseDate);
         this.pages = pages;
-        this.publisher = publisher;
+        this.author = author;
     }
 
     public String getAuthor() {
@@ -29,16 +26,13 @@ public class Book {
         this.author = author;
     }
 
-    public int getReleaseDate() {
-        return releaseDate;
+
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setReleaseDate(int releaseDate) {
-        if (releaseDate > 0) {
-            this.releaseDate = releaseDate;
-        } else {
-            System.out.println("Data wydania musi być większa od 0!");
-        }
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public int getPages() {
@@ -53,39 +47,16 @@ public class Book {
         }
     }
 
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     private String getInfo() {
-        String info = title + ";" + author + ";" + releaseDate + ";" + pages + ";" + publisher;
+        String info = getTitle() + ";" + author + ";" + getYear() + ";" + pages + ";" + getPublisher();
         if (isbn != null) {
             info = info + ";" + isbn;
         }
         return info;
     }
 
-    public void printInfo() {
+
+    void printInfo() {
         System.out.println(getInfo());
     }
 }
