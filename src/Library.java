@@ -1,7 +1,8 @@
 public class Library {
     public static void main(String[] args) {
         final String appName = "Biblioteka";
-        final String appVersion = "0.1";
+        final String appVersion = "0.4";
+
 
         Book book1 = new Book("Diuna", "Frank Herbert", 2018, 670,
                 "Rebis", "9788373017238");
