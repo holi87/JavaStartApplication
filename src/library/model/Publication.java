@@ -11,6 +11,9 @@ class Publication {
         this.year = year;
     }
 
+    public void printInfo() {
+    }
+
     int getYear() {
         return year;
     }
