@@ -4,7 +4,7 @@ import org.omg.PortableInterceptor.ObjectReferenceTemplateSeqHolder;
 
 import java.util.Objects;
 
-public class Publication {
+public abstract class Publication {
     private int year;
     private String title;
     private String publisher;
