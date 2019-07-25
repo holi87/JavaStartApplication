@@ -1,5 +1,7 @@
 package library.app;
 
+import library.exception.NoSuchOptionException;
+
 enum Option {
     EXIT(0, "Wyjście z programu"),
     ADD_BOOK(1, "Dodanie książki"),
@@ -27,8 +29,12 @@ enum Option {
     public String toString() {
         return value + " - " + description;
     }
-    static Option createFromInt(int option){
-        return Option.values()[option];
+    static Option createFromInt(int option) throws NoSuchOptionException {
+        try{
+            return Option.values()[option];
+        } catch (ArrayIndexOutOfBoundsException e){
+            throw new NoSuchOptionException("Brak opcji o id "+ option);
+        }
     }
 }
 

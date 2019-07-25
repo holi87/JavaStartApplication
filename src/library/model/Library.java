@@ -4,60 +4,27 @@ import java.util.Arrays;
 
 public class Library {
     private static final int MAX_PUBLICATIONS = 2000;
+
+
+
     private Publication[] publications = new Publication[MAX_PUBLICATIONS];
     private int publicationsNumber;
 
     public void addBook(Book book) {
-        if (publicationsNumber < MAX_PUBLICATIONS) {
-            publications[publicationsNumber] = book;
-            publicationsNumber++;
-        } else {
-            System.out.println("Osiągnięto maksymalną liczbę książek w bibliotece");
-        }
-    }
-
-    public void printBooks() {
-        int countBooks = 0;
-        for (int i = 0; i < publicationsNumber; i++) {
-            if (publications[i] instanceof Book) {
-                System.out.println(publications[i]);
-                countBooks++;
-            }
-        }
-        if (countBooks == 0) {
-            System.out.println("Brak książek w bibliotece!");
-        }
+        addPublication(book);
     }
 
     public void addMagazine(Magazine magazine) {
-        if (publicationsNumber < MAX_PUBLICATIONS) {
-            publications[publicationsNumber] = magazine;
-            publicationsNumber++;
-        } else {
-            System.out.println("Osiągnięto maksymalną liczbę czasopism w bibliotece");
-        }
+        addPublication(magazine);
     }
-
-    public void printMagazines() {
-        int countMagazines = 0;
-        for (int i = 0; i < publicationsNumber; i++) {
-            if (publications[i] instanceof Magazine) {
-                System.out.println(publications[i]);
-                countMagazines++;
-            }
-        }
-        if (countMagazines == 0) {
-            System.out.println("Brak czasopism w bibliotece");
-        }
+    public Publication[] getPublications() {
+        return publications;
     }
-
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < publicationsNumber; i++) {
-            builder.append(publications[i]);
-            builder.append("\n");
+    private void addPublication(Publication publication){
+        if (publicationsNumber >= MAX_PUBLICATIONS){
+            throw new ArrayIndexOutOfBoundsException("Maksymalna liczba publikacji przekroczona " + MAX_PUBLICATIONS );
         }
-        return builder.toString();
+        publications[publicationsNumber] = publication;
+        publicationsNumber++;
     }
 }
