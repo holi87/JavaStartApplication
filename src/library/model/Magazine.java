@@ -13,10 +13,11 @@ public class Magazine extends Publication {
         return (TYPE + ";") +
                 getTitle() + ";" +
                 getPublisher() + ";" +
+                language + ";"+
                 getYear() + ";" +
                 month + ";" +
-                day + ";" +
-                language + "";
+                day+"";
+
     }
     public Magazine(String title, String publisher, String language, int year, int month, int day) {
         super(title, publisher, year);

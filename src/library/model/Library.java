@@ -10,14 +10,6 @@ public class Library implements Serializable {
 
     private Publication[] publications = new Publication[MAX_PUBLICATIONS];
     private int publicationsNumber;
-
-    public void addBook(Book book) {
-        addPublication(book);
-    }
-
-    public void addMagazine(Magazine magazine) {
-        addPublication(magazine);
-    }
     public Publication[] getPublications() {
         return publications;
     }

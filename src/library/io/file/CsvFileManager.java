@@ -31,19 +31,16 @@ public class CsvFileManager implements FileManager {
     }
 
     @Override
-    public  void exportData(Library library){
+    public void exportData(Library library) {
         Publication[] publications = library.getPublications();
-        try(
-                FileWriter fileWriter = new FileWriter(FILE_NAME);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)
-                ){
-            for (Publication publication :
-                    publications) {
+        try (FileWriter fileWriter = new FileWriter(FILE_NAME);
+             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
+            for (Publication publication : publications) {
                 bufferedWriter.write(publication.toCsv());
                 bufferedWriter.newLine();
             }
-        }catch (IOException e){
-            throw new DataExportException("Błąd zapisu danych do pliku "+FILE_NAME);
+        } catch (IOException e) {
+            throw new DataExportException("Błąd zapisu danych do pliku " + FILE_NAME);
         }
     }
     private Publication createObjectFromString(String csvText){
@@ -64,16 +61,17 @@ public class CsvFileManager implements FileManager {
         int year = Integer.parseInt(data[4]);
         int month = Integer.parseInt(data[5]);
         int day = Integer.parseInt(data[6]);
-        return new Magazine(title, title, title, year, month, day);
+        return new Magazine(title, publisher, language, year, month, day);
     }
 
     private Book createBook(String[] data) {
         String title = data[1];
-        String author = data[2];
+        String publisher = data[2];
         int year = Integer.parseInt(data[3]);
-        int pages = Integer.parseInt(data[4]);
-        String publisher = data[5];
+        String author = data[4];
+        int pages = Integer.parseInt(data[5]);
+
         String isbn = data[6];
-        return new Book(title,author,year,pages,publisher, isbn);
+        return new Book(title,author,year,pages,publisher,isbn);
     }
 }
