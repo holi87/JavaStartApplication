@@ -1,8 +1,11 @@
 package library.app;
 
+import library.exception.DataImportException;
 import library.exception.NoSuchOptionException;
 import library.io.ConsolePrinter;
 import library.io.DataReader;
+import library.io.file.FileManager;
+import library.io.file.FileManagerBuilder;
 import library.model.Book;
 import library.model.Library;
 import library.model.Magazine;
@@ -14,8 +17,20 @@ import java.util.InputMismatchException;
 class LibraryControl {
     private ConsolePrinter printer = new ConsolePrinter();
     private DataReader dataReader = new DataReader(printer);
-
+    private FileManager fileManager;
     private Library library = new Library();
+
+    LibraryControl(){
+        fileManager = new FileManagerBuilder(printer, dataReader).build();
+        try{
+            library = fileManager.importData();
+            printer.printLine("Zaimportowane dane z pliku");
+        }catch (DataImportException e){
+            printer.printLine(e.getMessage());
+            printer.printLine("Zainicjowano nową bazę.");
+            library = new Library();
+        }
+    }
 
     void controlLoop() {
         Option option;
