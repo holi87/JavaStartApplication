@@ -1,8 +1,9 @@
 package library.model;
 
-import java.util.Arrays;
+import java.io.Serializable;
 
-public class Library {
+
+public class Library implements Serializable {
     private static final int MAX_PUBLICATIONS = 2000;
 
 
