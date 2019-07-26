@@ -9,14 +9,15 @@ public class FileManagerBuilder {
     private ConsolePrinter printer;
     private DataReader reader;
 
-    public FileManagerBuilder(ConsolePrinter printer, DataReader reader){
+    public FileManagerBuilder(ConsolePrinter printer, DataReader reader) {
         this.printer = printer;
-        this.reader=reader;
+        this.reader = reader;
     }
-    public FileManager build()  {
+
+    public FileManager build() {
         printer.printLine("Wybierz format danych:");
         FileType fileType = getFileType();
-        switch(fileType){
+        switch (fileType) {
             case SERIAL:
                 return new SerializableFileManager();
             case CSV:
@@ -25,7 +26,8 @@ public class FileManagerBuilder {
                 throw new NoSuchFileTypeException("Nieobsługiwany typ danych");
         }
     }
-    private FileType getFileType(){
+
+    private FileType getFileType() {
         boolean typeOk = false;
         FileType result = null;
         do {
@@ -34,13 +36,14 @@ public class FileManagerBuilder {
             try {
                 result = FileType.valueOf(type);
                 typeOk = true;
-            }catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 printer.printLine("Nieobsługiwany typ danych, wybierz ponownie");
             }
-        }while(!typeOk);
+        } while (!typeOk);
         return result;
     }
-    private void printTypes(){
+
+    private void printTypes() {
         for (FileType value :
                 FileType.values()) {
             printer.printLine(value.name());

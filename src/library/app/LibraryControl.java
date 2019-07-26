@@ -12,7 +12,6 @@ import library.model.Library;
 import library.model.Magazine;
 import library.model.Publication;
 
-import java.io.Console;
 import java.util.InputMismatchException;
 
 class LibraryControl {
@@ -21,12 +20,12 @@ class LibraryControl {
     private FileManager fileManager;
     private Library library;
 
-    LibraryControl(){
+    LibraryControl() {
         fileManager = new FileManagerBuilder(printer, dataReader).build();
-        try{
+        try {
             library = fileManager.importData();
             printer.printLine("Zaimportowane dane z pliku");
-        }catch (DataImportException e){
+        } catch (DataImportException e) {
             printer.printLine(e.getMessage());
             printer.printLine("Zainicjowano nową bazę.");
             library = new Library();
@@ -59,21 +58,23 @@ class LibraryControl {
             }
         } while (option != Option.EXIT);
     }
-    private Option getOption(){
-        boolean optionOK=false;
+
+    private Option getOption() {
+        boolean optionOK = false;
         Option option = null;
-        while (!optionOK){
-            try{
+        while (!optionOK) {
+            try {
                 option = Option.createFromInt(dataReader.getInt());
-                optionOK=true;
-            }catch(NoSuchOptionException e){
-                printer.printLine(e.getMessage()+ ", podaj ponownie:");
-            }catch(InputMismatchException ignored){
+                optionOK = true;
+            } catch (NoSuchOptionException e) {
+                printer.printLine(e.getMessage() + ", podaj ponownie:");
+            } catch (InputMismatchException ignored) {
                 printer.printLine("Wprowadzono wartość, która nie jest liczbą, podaj ponownie");
             }
         }
         return option;
     }
+
     private void printOptions() {
         printer.printLine("Wybierz opcje:");
         for (Option option :
@@ -84,12 +85,12 @@ class LibraryControl {
 
 
     private void addBook() {
-        try{
+        try {
             Book book = dataReader.readAndCreateBook();
             library.addPublication(book);
-        }catch (InputMismatchException e){
+        } catch (InputMismatchException e) {
             printer.printLine("Nie udało się utworzyć książki, nie poprawne dane");
-        }catch(ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             printer.printLine("Osiągnięto limit pojemności, nie można dodać kolejnej książki");
         }
 
@@ -115,6 +116,7 @@ class LibraryControl {
         Publication[] publications = library.getPublications();
         printer.printMagazines(publications);
     }
+
     private void exit() {
         try {
             fileManager.exportData(library);
@@ -131,10 +133,23 @@ class LibraryControl {
         ADD_BOOK(1, "Dodanie książki"),
         ADD_MAGAZINE(2, "Dodanie magazynu/gazety"),
         PRINT_BOOKS(3, "Wyświetlenie dostępnych książek"),
-        PRINT_MAGAZINES(4,"Wyświetlenie dostępnych magazynów/gazet");
+        PRINT_MAGAZINES(4, "Wyświetlenie dostępnych magazynów/gazet");
 
         private int value;
         private String description;
+
+        Option(int value, String description) {
+            this.value = value;
+            this.description = description;
+        }
+
+        static Option createFromInt(int option) throws NoSuchOptionException {
+            try {
+                return Option.values()[option];
+            } catch (ArrayIndexOutOfBoundsException e) {
+                throw new NoSuchOptionException("Brak opcji o id " + option);
+            }
+        }
 
         public int getValue() {
             return value;
@@ -144,21 +159,9 @@ class LibraryControl {
             return description;
         }
 
-        Option(int value, String description){
-            this.value = value;
-            this.description = description;
-        }
-
         @Override
         public String toString() {
             return value + " - " + description;
-        }
-        static Option createFromInt(int option) throws NoSuchOptionException {
-            try{
-                return Option.values()[option];
-            } catch (ArrayIndexOutOfBoundsException e){
-                throw new NoSuchOptionException("Brak opcji o id "+ option);
-            }
         }
 
     }

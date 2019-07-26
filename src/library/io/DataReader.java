@@ -3,29 +3,32 @@ package library.io;
 import library.model.Book;
 import library.model.Magazine;
 
-import java.io.Console;
 import java.util.Scanner;
 
 public class DataReader {
     private Scanner sc = new Scanner(System.in);
     private ConsolePrinter printer;
+
+    public DataReader(ConsolePrinter printer) {
+        this.printer = printer;
+    }
+
     public void close() {
         sc.close();
     }
 
     public int getInt() {
-        try{
+        try {
             return sc.nextInt();
-        } finally{
+        } finally {
             sc.nextLine();
         }
     }
-    public DataReader (ConsolePrinter printer){
-        this.printer = printer;
+
+    public String getString() {
+        return sc.nextLine();
     }
 
-    public String getString(){ return sc.nextLine(); }
-    
     public Book readAndCreateBook() {
         printer.printLine("Tytuł:");
         String title = sc.nextLine();

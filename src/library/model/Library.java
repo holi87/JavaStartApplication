@@ -7,15 +7,16 @@ public class Library implements Serializable {
     private static final int MAX_PUBLICATIONS = 2000;
 
 
-
     private Publication[] publications = new Publication[MAX_PUBLICATIONS];
     private int publicationsNumber;
+
     public Publication[] getPublications() {
         return publications;
     }
-    public void addPublication(Publication publication){
-        if (publicationsNumber >= MAX_PUBLICATIONS){
-            throw new ArrayIndexOutOfBoundsException("Maksymalna liczba publikacji przekroczona " + MAX_PUBLICATIONS );
+
+    public void addPublication(Publication publication) {
+        if (publicationsNumber >= MAX_PUBLICATIONS) {
+            throw new ArrayIndexOutOfBoundsException("Maksymalna liczba publikacji przekroczona " + MAX_PUBLICATIONS);
         }
         publications[publicationsNumber] = publication;
         publicationsNumber++;

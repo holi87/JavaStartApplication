@@ -45,15 +45,16 @@ public class CsvFileManager implements FileManager {
             throw new DataExportException("Błąd zapisu danych do pliku " + FILE_NAME);
         }
     }
-    private Publication createObjectFromString(String csvText){
+
+    private Publication createObjectFromString(String csvText) {
         String[] split = csvText.split(";");
         String type = split[0];
-        if(Book.TYPE.equals(type)){
+        if (Book.TYPE.equals(type)) {
             return createBook(split);
-        }else if (Magazine.TYPE.equals(type)){
+        } else if (Magazine.TYPE.equals(type)) {
             return createMagazine(split);
         }
-        throw new InvalidDataException("Nieznany typ publikacji "+type);
+        throw new InvalidDataException("Nieznany typ publikacji " + type);
     }
 
     private Magazine createMagazine(String[] data) {
@@ -74,6 +75,6 @@ public class CsvFileManager implements FileManager {
         int pages = Integer.parseInt(data[5]);
 
         String isbn = data[6];
-        return new Book(title,author,year,pages,publisher,isbn);
+        return new Book(title, author, year, pages, publisher, isbn);
     }
 }

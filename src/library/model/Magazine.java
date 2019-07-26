@@ -3,27 +3,28 @@ package library.model;
 import java.util.Objects;
 
 public class Magazine extends Publication {
+    public static final String TYPE = "Magazyn";
     private int month;
     private int day;
     private String language;
-    public static final String TYPE = "Magazyn";
+
+    public Magazine(String title, String publisher, String language, int year, int month, int day) {
+        super(title, publisher, year);
+        this.day = day;
+        this.month = month;
+        this.language = language;
+    }
 
     @Override
     public String toCsv() {
         return (TYPE + ";") +
                 getTitle() + ";" +
                 getPublisher() + ";" +
-                language + ";"+
+                language + ";" +
                 getYear() + ";" +
                 month + ";" +
-                day+"";
+                day + "";
 
-    }
-    public Magazine(String title, String publisher, String language, int year, int month, int day) {
-        super(title, publisher, year);
-        this.day = day;
-        this.month = month;
-        this.language = language;
     }
 
     public int getMonth() {
@@ -53,7 +54,7 @@ public class Magazine extends Publication {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass()!=o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Magazine magazine = (Magazine) o;
         return month == magazine.month &&
@@ -68,6 +69,6 @@ public class Magazine extends Publication {
 
     @Override
     public String toString() {
-        return super.toString() +", "+month+", "+day+", "+language;
+        return super.toString() + ", " + month + ", " + day + ", " + language;
     }
 }
