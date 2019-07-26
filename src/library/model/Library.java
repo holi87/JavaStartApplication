@@ -21,7 +21,7 @@ public class Library implements Serializable {
     public Publication[] getPublications() {
         return publications;
     }
-    private void addPublication(Publication publication){
+    public void addPublication(Publication publication){
         if (publicationsNumber >= MAX_PUBLICATIONS){
             throw new ArrayIndexOutOfBoundsException("Maksymalna liczba publikacji przekroczona " + MAX_PUBLICATIONS );
         }

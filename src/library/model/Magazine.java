@@ -6,7 +6,18 @@ public class Magazine extends Publication {
     private int month;
     private int day;
     private String language;
+    public static final String TYPE = "Magazyn";
 
+    @Override
+    public String toCsv() {
+        return (TYPE + ";") +
+                getTitle() + ";" +
+                getPublisher() + ";" +
+                getYear() + ";" +
+                month + ";" +
+                day + ";" +
+                language + "";
+    }
     public Magazine(String title, String publisher, String language, int year, int month, int day) {
         super(title, publisher, year);
         this.day = day;

@@ -6,7 +6,7 @@ public class Book extends Publication {
     private String author;
     private String isbn;
     private int pages;
-
+    public static final String TYPE = "Książka";
     public Book(String title, String author, int releasedate, int pages, String publisher, String isbn) {
         this(title, author, releasedate, pages, publisher);
         this.isbn = isbn;
@@ -74,6 +74,17 @@ public class Book extends Publication {
             info = info + ";" + isbn;
         }
         return info;
+    }
+
+    @Override
+    public String toCsv() {
+        return (TYPE + ";") +
+                getTitle() + ";" +
+                getPublisher() + ";" +
+                getYear() + ";" +
+                author + ";" +
+                pages + ";" +
+                isbn + "";
     }
 
 }

@@ -1,5 +1,6 @@
 package library.app;
 
+import library.exception.DataExportException;
 import library.exception.DataImportException;
 import library.exception.NoSuchOptionException;
 import library.io.ConsolePrinter;
@@ -18,7 +19,7 @@ class LibraryControl {
     private ConsolePrinter printer = new ConsolePrinter();
     private DataReader dataReader = new DataReader(printer);
     private FileManager fileManager;
-    private Library library = new Library();
+    private Library library;
 
     LibraryControl(){
         fileManager = new FileManagerBuilder(printer, dataReader).build();
@@ -81,10 +82,11 @@ class LibraryControl {
         }
     }
 
+
     private void addBook() {
         try{
             Book book = dataReader.readAndCreateBook();
-            library.addBook(book);
+            library.addPublication(book);
         }catch (InputMismatchException e){
             printer.printLine("Nie udało się utworzyć książki, nie poprawne dane");
         }catch(ArrayIndexOutOfBoundsException e){
@@ -99,8 +101,14 @@ class LibraryControl {
     }
 
     private void addMagazine() {
-        Magazine magazine = dataReader.readAndCreateMagazine();
-        library.addMagazine(magazine);
+        try {
+            Magazine magazine = dataReader.readAndCreateMagazine();
+            library.addPublication(magazine);
+        } catch (InputMismatchException e) {
+            printer.printLine("Nie udało się utworzyć magazynu, niepoprawne dane");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            printer.printLine("Osiągnięto limit pojemności, nie można dodać kolejnego magazynu");
+        }
     }
 
     private void printMagazines() {
@@ -108,8 +116,14 @@ class LibraryControl {
         printer.printMagazines(publications);
     }
     private void exit() {
-        System.out.println("Koniec programu, bye!");
+        try {
+            fileManager.exportData(library);
+            printer.printLine("Export danych do pliku zakończony powodzeniem");
+        } catch (DataExportException e) {
+            printer.printLine(e.getMessage());
+        }
         dataReader.close();
+        printer.printLine("Koniec programu, papa!");
     }
 
     private enum Option {
